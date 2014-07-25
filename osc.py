@@ -12,7 +12,7 @@ if os.path.isfile('config.ini'):
 
   auth = {
     'asdf': config.get('CREDENTIALS', 'user'),
-    'fdsa': config.get('CREDENTIALS', 'pwd'),
+    'fdsa': config.get('CREDENTIALS', 'pw'),
     'submit': 'Anmelden'
   }
 
@@ -64,7 +64,7 @@ def config():
     config.add_section('IDS')
     config.add_section('BRUTEFORCE')
     config.set('CREDENTIALS', 'user', 'username')
-    config.set('CREDENTIALS', 'pwd', 'passsword')
+    config.set('CREDENTIALS', 'pw', 'passsword')
     config.set('IDS', 'kontoOnTop', '')
     config.set('IDS', 'konto', '')
     config.set('BRUTEFORCE', 'startId', '1873537')

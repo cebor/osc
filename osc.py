@@ -6,30 +6,30 @@ import requests
 import ConfigParser
 import os.path
 
+if os.path.isfile('config.ini'):
+  config = ConfigParser.ConfigParser()
+  config.read('config.ini')
 
-config = ConfigParser.ConfigParser()
-config.read('config.ini')
+  auth = {
+    'asdf': config.get('CREDENTIALS', 'user'),
+    'fdsa': config.get('CREDENTIALS', 'pwd'),
+    'submit': 'Anmelden'
+  }
 
-auth = {
-  'asdf': config.get('CREDENTIALS', 'user'),
-  'fdsa': config.get('CREDENTIALS', 'pwd'),
-  'submit': 'Anmelden'
-}
+  ids = {
+    'kontoOnTop': config.get('IDS', 'kontoOnTop'),
+    'konto': config.get('IDS', 'konto')
+  }
 
-ids = {
-  'kontoOnTop': config.get('IDS', 'kontoOnTop'),
-  'konto': config.get('IDS', 'konto')
-}
+  startId = int(config.get('BRUTFORCE', 'startId'))
+  rng = int(config.get('BRUTFORCE', 'range'))
 
-startId = int(config.get('BRUTFORCE', 'startId'))
-rng = int(config.get('BRUTFORCE', 'range'))
-
-url = 'https://qis.fh-rosenheim.de/qisserver/'
-auth_url = url + 'rds?state=user&type=1&category=auth.login'
-link_url = url + 'rds?state=change&type=1&moduleParameter=studyPOSMenu&next=menu.vm&xml=menu'
-content_url = url + 'rds?state=notenspiegelStudent&next=list.vm&nextdir=qispos/notenspiegel/student' + \
-    '&createInfos=Y&struct=abschluss&nodeID=auswahlBaum|abschluss:abschl=84,stgnr=1,stg=INF,pversion=20122' + \
-    '|studiengang:stg=INF|kontoOnTop:labnrzu=%(kontoOnTop)s|konto:labnrzu=%(konto)s' % (ids)
+  url = 'https://qis.fh-rosenheim.de/qisserver/'
+  auth_url = url + 'rds?state=user&type=1&category=auth.login'
+  link_url = url + 'rds?state=change&type=1&moduleParameter=studyPOSMenu&next=menu.vm&xml=menu'
+  content_url = url + 'rds?state=notenspiegelStudent&next=list.vm&nextdir=qispos/notenspiegel/student' + \
+      '&createInfos=Y&struct=abschluss&nodeID=auswahlBaum|abschluss:abschl=84,stgnr=1,stg=INF,pversion=20122' + \
+      '|studiengang:stg=INF|kontoOnTop:labnrzu=%(kontoOnTop)s|konto:labnrzu=%(konto)s' % (ids)
 
 s = requests.session()
 

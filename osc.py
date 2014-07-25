@@ -21,8 +21,8 @@ if os.path.isfile('config.ini'):
     'konto': config.get('IDS', 'konto')
   }
 
-  startId = int(config.get('BRUTFORCE', 'startId'))
-  rng = int(config.get('BRUTFORCE', 'range'))
+  startId = int(config.get('BRUTEFORCE', 'startId'))
+  rng = int(config.get('BRUTEFORCE', 'range'))
 
   url = 'https://qis.fh-rosenheim.de/qisserver/'
   auth_url = url + 'rds?state=user&type=1&category=auth.login'
@@ -41,7 +41,7 @@ def asi():
   return asi
 
 
-def brutforce(startId, rng, asi):
+def bruteforce(startId, rng, asi):
   for i in range(int(rng)):
     idn = startId
     idn = idn + i
@@ -67,8 +67,8 @@ def config():
     config.set('CREDENTIALS', 'pwd', 'passsword')
     config.set('IDS', 'kontoOnTop', '')
     config.set('IDS', 'konto', '')
-    config.set('BRUTFORCE', 'startId', '1873537')
-    config.set('BRUTFORCE', 'range', '1000')
+    config.set('BRUTEFORCE', 'startId', '1873537')
+    config.set('BRUTEFORCE', 'range', '1000')
     with open('config.ini', 'w') as configfile:
       config.write(configfile)
     print('Creating config.ini! Please setup and rerun!')
@@ -78,4 +78,4 @@ def config():
 
 if __name__ == "__main__":
   if config():
-    brutforce(startId, rng, asi())
+    bruteforce(startId, rng, asi())

@@ -17,3 +17,7 @@ Run
 ```
 python osc.py
 ```
+
+Troubleshooting
+---
+Remove `config.ini` and rerun!

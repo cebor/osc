@@ -62,7 +62,7 @@ def config():
     config = ConfigParser.ConfigParser()
     config.add_section('CREDENTIALS')
     config.add_section('IDS')
-    config.add_section('BRUTFORCE')
+    config.add_section('BRUTEFORCE')
     config.set('CREDENTIALS', 'user', 'username')
     config.set('CREDENTIALS', 'pwd', 'passsword')
     config.set('IDS', 'kontoOnTop', '')

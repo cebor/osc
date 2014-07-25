@@ -6,6 +6,7 @@ import requests
 import ConfigParser
 import os.path
 
+
 if os.path.isfile('config.ini'):
   config = ConfigParser.ConfigParser()
   config.read('config.ini')
@@ -31,6 +32,7 @@ if os.path.isfile('config.ini'):
       '&createInfos=Y&struct=abschluss&nodeID=auswahlBaum|abschluss:abschl=84,stgnr=1,stg=INF,pversion=20122' + \
       '|studiengang:stg=INF|kontoOnTop:labnrzu=%(kontoOnTop)s|konto:labnrzu=%(konto)s' % (ids)
 
+
 s = requests.session()
 
 def asi():
@@ -41,7 +43,7 @@ def asi():
   return asi
 
 
-def bruteforce(startId, rng, asi):
+def bruteforce(asi):
   for i in range(rng):
     id_ = startId
     id_ = id_ + i
@@ -78,4 +80,4 @@ def config():
 
 if __name__ == "__main__":
   if config():
-    bruteforce(startId, rng, asi())
+    bruteforce(asi())

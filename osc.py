@@ -47,11 +47,11 @@ def brutforce(startId, rng, asi):
     idn = idn + i
     param = '|pruefung:labnr=%s' % (idn)
 
-    r2 = s.get(content_url + param + '&asi=' + asi)
-    doc2 = pq(r2.text)
+    r = s.get(content_url + param + '&asi=' + asi)
+    doc = pq(r.text)
 
-    subject = doc2('table tr td.tabelle1:nth-child(2)').text()
-    score = doc2('table tr td.tabelle1:nth-child(4)').text()
+    subject = doc('table tr td.tabelle1:nth-child(2)').text()
+    score = doc('table tr td.tabelle1:nth-child(4)').text()
 
     if subject and score:
       print(subject + ' - ' + score)

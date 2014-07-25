@@ -42,7 +42,7 @@ def asi():
 
 
 def bruteforce(startId, rng, asi):
-  for i in range(int(rng)):
+  for i in range(rng):
     idn = startId
     idn = idn + i
     param = '|pruefung:labnr=%s' % (idn)

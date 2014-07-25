@@ -43,9 +43,9 @@ def asi():
 
 def bruteforce(startId, rng, asi):
   for i in range(rng):
-    idn = startId
-    idn = idn + i
-    param = '|pruefung:labnr=%s' % (idn)
+    id_ = startId
+    id_ = id_ + i
+    param = '|pruefung:labnr=%s' % (id_)
 
     r = s.get(content_url + param + '&asi=' + asi)
     doc = pq(r.text)

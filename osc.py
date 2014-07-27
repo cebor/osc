@@ -30,7 +30,7 @@ if os.path.isfile('config.ini'):
   link_url = url + 'rds?state=change&type=1&moduleParameter=studyPOSMenu&next=menu.vm&xml=menu'
   content_url = url + 'rds?state=notenspiegelStudent&next=list.vm&nextdir=qispos/notenspiegel/student' + \
       '&createInfos=Y&struct=abschluss&nodeID=auswahlBaum|abschluss:abschl=84,stgnr=1,stg=INF,pversion=20122' + \
-      '|studiengang:stg=INF|kontoOnTop:labnrzu=%(kontoOnTop)s|konto:labnrzu=%(konto)s' % (ids)
+      '|studiengang:stg=INF|kontoOnTop:labnrzu=%(kontoOnTop)s|konto:labnrzu=%(konto)s' % ids
 
 
 s = requests.session()
@@ -39,17 +39,15 @@ def asi():
   s.post(auth_url, data=auth)
   r = s.get(link_url)
   doc = pq(r.text)
-  asi, = parse_qs(doc('a[href*=asi]').attr('href'))['asi']
-  return asi
+  asi, = parse_qs(doc('a[href*="&asi="]').attr('href'))['asi']
+  return '&asi=%s' % asi
 
 
 def bruteforce(asi):
-  for i in range(rng):
-    id_ = startId
-    id_ = id_ + i
-    param = '|pruefung:labnr=%s' % (id_)
+  for i in range(startId, startId + rng):
+    param = '|pruefung:labnr=%s' % i
 
-    r = s.get(content_url + param + '&asi=' + asi)
+    r = s.get(content_url + param + asi)
     doc = pq(r.text)
 
     subject = doc('table tr td.tabelle1:nth-child(2)').text()

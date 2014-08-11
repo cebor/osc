@@ -1,18 +1,23 @@
 #!/usr/bin/env python
 
-from gevent import monkey; monkey.patch_all()
+from gevent.monkey import patch_all; patch_all()
+
+from os import path
+from time import sleep
+from urlparse import parse_qs
+from ConfigParser import ConfigParser
+
+from pyquery import PyQuery as pq
+
+from requests import session
+
 from gevent.pool import Pool
 from gevent.queue import Queue
-from pyquery import PyQuery as pq
-from urlparse import parse_qs
-from time import sleep
-import requests
-import os.path, ConfigParser
 
 
-config = ConfigParser.ConfigParser()
+config = ConfigParser()
 
-if os.path.isfile('config.ini'):
+if path.isfile('config.ini'):
   config.read('config.ini')
 
   auth = {
@@ -50,7 +55,7 @@ def init_queue():
 
 
 def auth_asi():
-  s = requests.session()
+  s = session()
   s.post(auth_url, data=auth)
   r = s.get(link_url)
   doc = pq(r.text)
@@ -78,7 +83,7 @@ def bruteforce(i):
 
 
 def check_config():
-  if not os.path.isfile('config.ini'):
+  if not path.isfile('config.ini'):
     config.add_section('CREDENTIALS')
     config.add_section('IDS')
     config.add_section('BRUTEFORCE')

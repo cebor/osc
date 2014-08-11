@@ -17,6 +17,7 @@ from gevent.queue import Queue
 
 config = ConfigParser()
 
+# init vars
 if path.isfile('config.ini'):
   config.read('config.ini')
 
@@ -45,15 +46,19 @@ if path.isfile('config.ini'):
       '|studiengang:stg=INF|kontoOnTop:labnrzu=%(kontoOnTop)s|konto:labnrzu=%(konto)s' % ids
 
 
+# auth queue
 queue = Queue(pa)
+
+# event pool
 pool = Pool(pr)
 
-
+# fill queue with auth sessions
 def init_queue():
   for r in pool.imap_unordered(lambda _: auth_asi(), range(pa)):
     queue.put(r)
 
 
+# get auth session and asi token
 def auth_asi():
   s = session()
   s.post(auth_url, data=auth)
@@ -63,7 +68,8 @@ def auth_asi():
   return {'session': s, 'asi': asi}
 
 
-def bruteforce(i):
+# print score if exists
+def print_score(i):
   auth = queue.get()
   queue.put(auth)
 
@@ -82,6 +88,7 @@ def bruteforce(i):
     print(subject + ' - ' + score)
 
 
+# if no config exits, default config will be created
 def check_config():
   if not path.isfile('config.ini'):
     config.add_section('CREDENTIALS')
@@ -106,6 +113,8 @@ def check_config():
 if __name__ == "__main__":
   if check_config():
     init_queue()
+
+    # bruteforce
     for i in range(startId, startId + rng):
       sleep(slt)
-      pool.spawn(bruteforce, i)
+      pool.spawn(print_score, i)

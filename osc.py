@@ -9,7 +9,7 @@ from ConfigParser import ConfigParser
 
 from pyquery import PyQuery as pq
 
-from requests import session
+from requests import Session
 
 from gevent.pool import Pool
 from gevent.queue import Queue
@@ -60,7 +60,7 @@ def init_queue():
 
 # get auth session and asi token
 def auth_asi():
-  s = session()
+  s = Session()
   s.post(auth_url, data=auth)
   r = s.get(link_url)
   doc = pq(r.text)
